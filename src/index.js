@@ -1,3 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../css/index.css';
+
+import App from './components/App';
+import '../src/css/index.css';
+
+ReactDOM.render(
+    <App />,
+    document.querySelector('.container')
+);
