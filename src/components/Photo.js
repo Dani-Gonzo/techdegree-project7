@@ -2,7 +2,9 @@ import React from 'react';
 
 const Photo = () => {
     return (
-        <p>TestPhotos</p>
+        <li>
+            <img alt=""/>
+        </li>
     );
 }
 
