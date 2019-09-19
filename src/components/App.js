@@ -22,7 +22,7 @@ export default class App extends Component {
         this.setState({photos: responseData.photos.photo});
       })
       .catch(error => {
-        console.log('Error fetching data', error);
+        console.log('Error fetching photos', error);
       });
   }
 
@@ -32,7 +32,7 @@ export default class App extends Component {
       <div className="gallery">
         <Search />
         <Nav />
-        <PhotoContainer />
+        <PhotoContainer data={this.state.photos} />
       </div>
     );
   }
