@@ -11,15 +11,23 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      photos: []
+      photos: [],
+      loading: true
     };
   }
 
   componentDidMount() {
-    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${key}&tags=turtle&per_page=24&format=json&nojsoncallback=1`)
+    this.search();
+  }
+
+  search = (tag = 'ocean') => {
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${key}&tags=${tag}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then(responseData => {
-        this.setState({photos: responseData.photos.photo});
+        this.setState({
+          photos: responseData.photos.photo,
+          loading: false
+        });
       })
       .catch(error => {
         console.log('Error fetching photos', error);
@@ -30,9 +38,13 @@ export default class App extends Component {
     console.log(this.state.photos);
     return (
       <div className="gallery">
-        <Search />
+        <Search onSearch={this.search}/>
         <Nav />
-        <PhotoContainer data={this.state.photos} />
+        {
+          (this.state.loading)
+          ? <p>Loading...</p>
+          : <PhotoContainer data={this.state.photos} />
+        }
       </div>
     );
   }

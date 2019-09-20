@@ -4,10 +4,13 @@ import NotFound from './NotFound.js';
 
 const PhotoContainer = props => {
 
-const results = props.data;
-let photos = results.map(photo => 
-    <Photo url={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} key={photo.id} />
-);
+    const results = props.data;
+    let photos;
+    if (results.length > 0) {
+        photos = results.map(photo => <Photo url={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} key={photo.id} />);
+    } else {
+        photos = <NotFound />
+    }
 
     return(
         <div className="photo-container">
@@ -15,7 +18,6 @@ let photos = results.map(photo =>
             <ul>
                 {photos}
             </ul>
-            <NotFound />
         </div>
     );
 }
