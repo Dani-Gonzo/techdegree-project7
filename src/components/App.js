@@ -3,6 +3,7 @@ import Nav from './Nav.js';
 import PhotoContainer from './PhotoContainer.js';
 import Search from './Search.js';
 import apiKey from '../config.js';
+import {BrowserRouter, Route, NavLink, Switch} from 'react-router-dom';
 
 const key = apiKey;
 
@@ -37,15 +38,17 @@ export default class App extends Component {
   render() {
     console.log(this.state.photos);
     return (
-      <div className="gallery">
-        <Search onSearch={this.search}/>
-        <Nav />
-        {
-          (this.state.loading)
-          ? <p>Loading...</p>
-          : <PhotoContainer data={this.state.photos} />
-        }
-      </div>
+      <BrowserRouter>
+        <div className="gallery">
+          <Search onSearch={this.search}/>
+          <Nav />
+          {
+            (this.state.loading)
+            ? <p>Loading...</p>
+            : <PhotoContainer data={this.state.photos} />
+          }
+        </div>
+      </BrowserRouter>
     );
   }
 }
