@@ -1,15 +1,16 @@
 import React from 'react';
+import PhotoContainer from './PhotoContainer';
 import {Route, NavLink} from 'react-router-dom';
 
-const Nav = ({match}) => {
+const Nav = () => {
     return (
-        <nav className="main-nav">
+        <div className="main-nav">
             <ul>
                 <li><NavLink to={"/turtles"}>Turtles</NavLink></li>
                 <li><NavLink to={"/cats"}>Cats</NavLink></li>
                 <li><NavLink to={"/ocean"}>Ocean</NavLink></li>
             </ul>
-        </nav>
+        </div>
     );
 }
 
