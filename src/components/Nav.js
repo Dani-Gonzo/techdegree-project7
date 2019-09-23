@@ -1,6 +1,5 @@
 import React from 'react';
-import PhotoContainer from './PhotoContainer';
-import {Route, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 const Nav = () => {
     return (
