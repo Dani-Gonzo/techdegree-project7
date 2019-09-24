@@ -13,6 +13,8 @@ export default class Search extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.onSearch(this.tag.value);
+        // let path = `/${this.tag.value}`;
+        this.props.history.push({pathname: `/${this.tag.value}`});
         e.currentTarget.reset();
     }
 

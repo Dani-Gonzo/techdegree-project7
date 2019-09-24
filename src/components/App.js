@@ -13,15 +13,34 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      photos: []
+      photos: [],
+      seaTurtlePhotos: [],
+      catPhotos: [],
+      oceanPhotos: []
     };
   }
 
   componentDidMount() {
-    this.search();
+    this.getPhotos("sea_turtle").then(responseData => {
+      if (!responseData) {
+        return;
+      }
+      this.setState({
+        photos: responseData.photos.photo,
+        seaTurtlePhotos: responseData.photos.photo
+      });
+    });
   }
 
-  search = (tag = 'sea_turtle') => {
+  getPhotos = (query) => {
+    return fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${key}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+              .then(response => response.json())
+              .catch(error => {
+                console.log('Error fetching photos', error);
+              });
+  }
+
+  search = (tag) => {
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${key}&tags=${tag}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then(responseData => {
@@ -38,13 +57,14 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div className="gallery">
-          <Search onSearch={this.search}/>
+          <Route path="/" render={(props) => <Search {...props} onSearch={this.search}/> } /> 
           <Nav />
           <Switch>
             <Route exact path="/" render={() => <PhotoContainer data={this.state.photos} />} />
-            <Route path="/turtles" render={() => <PhotoContainer data={this.state.photos} />} />
+            <Route path="/turtles" render={() => <PhotoContainer data={this.state.seaTurtlePhotos} />} />
             <Route path="/cats" render={() => <PhotoContainer data={this.state.photos} />} />
             <Route path="/ocean" render={() => <PhotoContainer data={this.state.photos} />} />
+
             <Route component={NotFound} />
           </Switch>
           {/* {
