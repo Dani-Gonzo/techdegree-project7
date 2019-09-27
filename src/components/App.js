@@ -4,7 +4,7 @@ import PhotoContainer from './PhotoContainer.js';
 import NotFound from './NotFound';
 import Search from './Search.js';
 import apiKey from '../config.js';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 const key = apiKey;
 
@@ -13,21 +13,48 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
+      loading: true,
       photos: [],
       seaTurtlePhotos: [],
       catPhotos: [],
-      oceanPhotos: []
+      matchaPhotos: []
     };
   }
 
   componentDidMount() {
+    this.getPhotos("cookie").then(responseData => {
+      if (!responseData) {
+        return;
+      }
+      this.setState({
+        photos: responseData.photos.photo
+      });
+    });
+
     this.getPhotos("sea_turtle").then(responseData => {
       if (!responseData) {
         return;
       }
       this.setState({
-        photos: responseData.photos.photo,
         seaTurtlePhotos: responseData.photos.photo
+      });
+    });
+
+    this.getPhotos("cat").then(responseData => {
+      if (!responseData) {
+        return;
+      }
+      this.setState({
+        catPhotos: responseData.photos.photo
+      });
+    });
+
+    this.getPhotos("matcha_tea").then(responseData => {
+      if (!responseData) {
+        return;
+      }
+      this.setState({
+        matchaPhotos: responseData.photos.photo
       });
     });
   }
@@ -40,12 +67,13 @@ export default class App extends Component {
               });
   }
 
-  search = (tag) => {
+  search = (tag = "cookie") => {
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${key}&tags=${tag}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then(responseData => {
         this.setState({
-          photos: responseData.photos.photo
+          photos: responseData.photos.photo,
+          loading: false
         });
       })
       .catch(error => {
@@ -60,13 +88,15 @@ export default class App extends Component {
           <Route path="/" render={(props) => <Search {...props} onSearch={this.search}/> } /> 
           <Nav />
           <Switch>
-            <Route exact path="/" render={() => <PhotoContainer data={this.state.photos} />} />
+            <Route exact path="/" render={() => <Redirect to="/search/cookie" />} />
+            <Route path="/search/:tag" render={(props) => { this.search(props.match.params.tag); return <PhotoContainer data={this.state.photos} />}} />
             <Route path="/turtles" render={() => <PhotoContainer data={this.state.seaTurtlePhotos} />} />
-            <Route path="/cats" render={() => <PhotoContainer data={this.state.photos} />} />
-            <Route path="/ocean" render={() => <PhotoContainer data={this.state.photos} />} />
-
+            <Route path="/cats" render={() => <PhotoContainer data={this.state.catPhotos} />} />
+            <Route path="/matcha_tea" render={() => <PhotoContainer data={this.state.matchaPhotos} />} />
             <Route component={NotFound} />
           </Switch>
+            
+          
           {/* {
             (this.state.loading)
             ? <p>Loading...</p>
