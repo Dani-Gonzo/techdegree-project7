@@ -1,13 +1,18 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
-const Nav = () => {
+const Nav = (props) => {
+
+    let searchTag = e => {
+        props.onSearch(e.target.innerText);
+    }
+
     return (
         <nav className="main-nav">
             <ul>
-                <li><NavLink to={"/turtles"}>Turtles</NavLink></li>
-                <li><NavLink to={"/cats"}>Cats</NavLink></li>
-                <li><NavLink to={"/matcha_tea"}>Matcha Tea</NavLink></li>
+                <li><NavLink to={"/search/sea_turtles"} onClick={searchTag}>Sea Turtles</NavLink></li>
+                <li><NavLink to={"/search/cats"} onClick={searchTag}>Cats</NavLink></li>
+                <li><NavLink to={"/search/matcha_tea"} onClick={searchTag}>Matcha Tea</NavLink></li>
             </ul>
         </nav>
     );

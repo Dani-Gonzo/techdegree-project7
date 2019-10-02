@@ -4,6 +4,8 @@ import NotFound from './NotFound.js';
 
 const PhotoContainer = props => {
 
+    let title = props.match.params.tag;
+    title = title.replace(/_/g, " ");
     const results = props.data;
     let photos;
     if (results.length > 0) {
@@ -14,7 +16,7 @@ const PhotoContainer = props => {
 
     return(
         <div className="photo-container">
-            <h2>Results</h2>
+            <h2>{title}</h2>
             <ul>
                 {photos}
             </ul>
