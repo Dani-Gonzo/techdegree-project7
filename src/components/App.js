@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Nav from './Nav.js';
 import PhotoContainer from './PhotoContainer.js';
-import NotFound from './NotFound';
 import Search from './Search.js';
 import FourOhFour from './404.js';
 import apiKey from '../config.js';
@@ -46,15 +45,17 @@ export default class App extends Component {
         <div className="gallery">
           <Route path="/" render={(props) => <Search {...props} onSearch={this.search}/> } /> 
           <Nav onSearch={this.search}/>
-          <Switch>
-            <Route exact path="/" render={() => <Redirect to="/search/cookie" />} />
-            {
-              (this.state.loading)
-              ? <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" />
-              : <Route path="/search/:tag" render={(props) => <PhotoContainer data={this.state.photos} {...props} />} />
-            }
-            <Route component={FourOhFour} />
-          </Switch>
+
+          {
+            (this.state.loading)
+            ? <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading Icon" />
+            : <Switch>
+                <Route exact path="/" render={() => <Redirect to="/search/cookie" />} />
+                <Route path="/search/:tag" render={(props) => <PhotoContainer data={this.state.photos} {...props} />} />
+                <Route component={FourOhFour} />
+              </Switch>
+          }
+          
         </div>
       </BrowserRouter>
     );
