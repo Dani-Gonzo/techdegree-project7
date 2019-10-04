@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 
 const Nav = (props) => {
 
+    // Calling search using text of the nav button for a search term
     let searchTag = e => {
         props.onSearch(e.target.innerText);
     }

@@ -12,7 +12,9 @@ export default class Search extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
+        // Calling search using queried term ...
         this.props.onSearch(this.state.searchTag);
+        // ... then setting the path to update the URL for a unified experience
         let path = `/search/${this.state.searchTag}`;
         this.props.history.push(path);
         e.currentTarget.reset();

@@ -4,8 +4,10 @@ import NotFound from './NotFound.js';
 
 const PhotoContainer = props => {
 
+    // Extracts search term from route parameter and uses regex to relace underscores with spaces for results title
     let title = props.match.params.tag;
     title = title.replace(/_/g, " ");
+
     const results = props.data;
     let photos;
     if (results.length > 0) {

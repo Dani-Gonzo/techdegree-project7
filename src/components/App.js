@@ -23,9 +23,11 @@ export default class App extends Component {
   }
 
   search = (tag) => {
+    // Set state so the loading icon shows between searches
     this.setState({
       loading: true
     });
+    
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${key}&tags=${tag}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then(responseData => {
@@ -43,9 +45,10 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div className="gallery">
+          {/* Props passed to Search component so history is usable by it */}
           <Route path="/" render={(props) => <Search {...props} onSearch={this.search}/> } /> 
           <Nav onSearch={this.search}/>
-
+          {/* Shows loading icon if api fetch is in progress */}
           {
             (this.state.loading)
             ? <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading Icon" />

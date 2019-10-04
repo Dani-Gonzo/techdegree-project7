@@ -1,14 +1,23 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 # techdegree-project7
 
-## Getting Started
+## React Gallery App
+An image gallery app made using the React library, along with React Router and the Fetch API, that allows users to search for images from Flickr.
 
+## Getting Started
+Install the dependencies with `npm install`. Run project with `npm start`.
 
 ## Dependencies
-
+- react and react-dom v16.9.0
+- react-router and react-router-dom v5.0.1
+- Node.js v10.16.3
 
 ## Other Features
-
+- Loading indicator appears between searches when image fetch is in progress
+- When no results are found, a friendly message tells the user such.
+- When a URL does not exist, a friendly 404 error page appears.
+- URL updates with search term when user submits a search.
+- Title of the results updates with a search, displaying the queried search term above the fetched images.
 
 ## Available Scripts
 
